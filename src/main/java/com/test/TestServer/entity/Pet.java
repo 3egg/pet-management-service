@@ -2,6 +2,9 @@ package com.test.TestServer.entity;
 
 import com.test.TestServer.enums.Species;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,13 +34,15 @@ public class Pet {
     /**
      * The species of the pet.
      */
-    @Column
+    @Column(nullable = false)
+    @NotNull(message = "Species is required")
     private Species species;
 
     /**
      * The age of the pet.
      */
-    @Column
+    @Min(value = 0, message = "Age cannot be negative")
+    @Max(value = 100, message = "Age cannot exceed 100 years")
     private Integer age;
 
     /**

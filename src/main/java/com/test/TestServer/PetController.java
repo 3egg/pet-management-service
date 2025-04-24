@@ -2,11 +2,11 @@ package com.test.TestServer;
 
 import com.test.TestServer.entity.Pet;
 import com.test.TestServer.repository.PetRepository;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,8 +32,13 @@ public class PetController {
      * @return All of the pets in the database.
      */
     @GetMapping
-    private List<Pet> getPets() {
+    public List<Pet> getPets() {
         log.info("PetController.getPets() called");
         return petRepository.findAll();
+    }
+
+    @PostMapping
+    public ResponseEntity<Pet> savePet(@Valid @RequestBody Pet pet) {
+         return ResponseEntity.ok(petRepository.save(pet));
     }
 }
