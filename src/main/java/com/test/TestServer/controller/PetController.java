@@ -1,4 +1,4 @@
-package com.test.TestServer;
+package com.test.TestServer.controller;
 
 import com.test.TestServer.entity.Pet;
 import com.test.TestServer.repository.PetRepository;
@@ -32,7 +32,7 @@ public class PetController {
      * @return All of the pets in the database.
      */
     @GetMapping
-    private List<Pet> getPets() {
+    public List<Pet> getPets() {
         log.info("PetController.getPets() called");
         return petRepository.findAll();
     }
