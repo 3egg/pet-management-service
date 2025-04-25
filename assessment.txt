@@ -1,0 +1,13 @@
+2. Assigning Pets to Owners:
+
+Modify the Pet and Owner entities to establish a One-To-Many relationship (an owner can have multiple pets, but a pet can only have one owner).
+
+Ensure data integrity and enforce the relationship constraints at the database level. Update PetController to include an endpoint that assigns a pet to an owner. Handle edge cases like reassigning a pet to a different owner or assigning a pet that already has an owner, these should return appropriate error messages.
+
+
+
+3. Sorting and Filtering Pets Implement functionality in PetController to sort and filter pets based on different attributes like age, name, species,
+etc. Use whichever sorting system you deem most appropriate for this context. Ensure that these capabilities are exposed via REST API endpoints.
+
+
+4. Update the TestServerApplicationTests class to perform an MVC mock request, test one endpoint, and validate the response data.

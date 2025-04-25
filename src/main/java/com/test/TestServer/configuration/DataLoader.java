@@ -1,8 +1,11 @@
 package com.test.TestServer.configuration;
 
+import com.test.TestServer.entity.Owner;
 import com.test.TestServer.entity.Pet;
 import com.test.TestServer.enums.Species;
+import com.test.TestServer.repository.OwnerRepository;
 import com.test.TestServer.repository.PetRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,13 +15,11 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class DataLoader implements CommandLineRunner {
 
     private final PetRepository petRepository;
-
-    public DataLoader(PetRepository petRepository) {
-        this.petRepository = petRepository;
-    }
+    private final OwnerRepository ownerRepository;
 
     /**
      * Runs the data loader. This adds some pets to the database, and anything else you may require.
@@ -39,10 +40,20 @@ public class DataLoader implements CommandLineRunner {
      * Adds some pets to the database. Feel free to alter this if it doesn't fit your needs.
      */
     public void addPets() {
+        //we save owner first
+        Owner owner = new Owner();
+        owner.setId(1L);
+        owner.setNameLast("TIAN");
+        owner.setNameFirst("LI");
+        owner.setAddress("Guang Zhou");
+
+        ownerRepository.save(owner);
+
         Pet dog = new Pet();
         dog.setName("Spot");
         dog.setSpecies(Species.dog);
         dog.setAge(2);
+        dog.setOwner(owner);
         petRepository.save(dog);
 
         Pet cat = new Pet();
