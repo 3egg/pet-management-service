@@ -34,7 +34,7 @@ public class PetController {
         return ResponseEntity.ok(petService.getPets());
     }
 
-    @PostMapping("/{ownerId}/{petId}")
+    @PostMapping("/{petId}/assignTo/{ownerId}")
     public ResponseEntity<Pet> assignOwnerToPet(@PathVariable Long ownerId, @PathVariable Long petId) {
         log.info("PetController.assignOwnerToPet() called");
         return ResponseEntity.ok(petService.assignOwnerToPet(ownerId, petId));
