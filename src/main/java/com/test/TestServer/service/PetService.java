@@ -14,15 +14,14 @@ import com.test.TestServer.repository.PetRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -56,15 +55,9 @@ public class PetService {
                 .name(name)
                 .build();
         List<SortDto> sortDtos = jsonStringToSortDto(sort);
-        List<Sort.Order> orders = new ArrayList<>();
-
-        if (sortDtos != null) {
-            for(SortDto sortDto: sortDtos) {
-                Sort.Direction direction = Objects.equals(sortDto.getDirection(), "desc")
-                        ? Sort.Direction.DESC : Sort.Direction.ASC;
-                orders.add(new Sort.Order(direction,sortDto.getField()));
-            }
-        }
+        var orders = sortDtos.stream()
+                .map(s -> new Sort.Order(Sort.Direction.fromString(s.getDirection()), s.getField()))
+                .toList();
 
         Specification<Pet> specification = getSpecification(filterDto);
 
@@ -95,7 +88,7 @@ public class PetService {
             });
         } catch (Exception e) {
             log.info("jsonStringToSortDto failed: {}", e.getMessage());
-            return null;
+            return Collections.emptyList();
         }
     }
 }
