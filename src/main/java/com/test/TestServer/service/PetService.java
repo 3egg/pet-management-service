@@ -34,7 +34,7 @@ public class PetService {
     private final ObjectMapper objectMapper;
 
     public Pet assignOwnerToPet(Long ownerId, Long petId) {
-        Owner owner = ownerRepository.findById(ownerId).orElseThrow(OwnerNotFoundException::new);
+        Owner owner = ownerRepository.findById(ownerId).orElseThrow(() -> new OwnerNotFoundException("we cannot find the owner " + ownerId));
         Pet pet = petRepository.findById(petId).orElseThrow(PetNotFoundException::new);
         if (pet.getOwner() != null) {
             throw new PetAlreadyHasOwnerException("The pet already has the owner!");
