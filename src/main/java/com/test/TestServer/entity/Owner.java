@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 /**
  * The owner entity. This is a simple entity that has a first name, last name, and address.
  * It also has a pet ID, which is the ID of the pet that this owner owns.
@@ -43,6 +45,7 @@ public class Owner {
      * The IDs of the pets that this owner owns.
      * seems like it can only hold one ID right now...
      */
-    @Column
-    private Integer petId;
+    @OneToMany
+    @JoinColumn(name = "pet_id")
+    private Set<Pet> pets;
 }

@@ -43,6 +43,7 @@ public class Pet {
     /**
      * The ID of the owner that owns this pet.
      */
-    @Column
-    private Long ownerId;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 }
